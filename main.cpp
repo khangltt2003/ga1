@@ -43,10 +43,15 @@ class Bar{
         return;
       }
       Customer* curr = head;
-      while(curr->next){
+      while(curr){
         if(curr->id == newCustomer->id){
           curr->guilty = true;
+          return;
         }
+        curr = curr->next;
+      }
+      curr = head;
+      while(curr->next){
         curr = curr->next;
       }
       curr->next = newCustomer;
@@ -134,9 +139,6 @@ int main(int agrc, char* argv[]){
   }
   bar1.sortCustomer();
   bar2.sortCustomer();
-  // bar1.printCustomer();
-  // cout << endl;
-  // bar2.printCustomer();
 
   Customer* b1 = bar1.getHead();
   Customer* b2 = bar2.getHead();
@@ -145,17 +147,15 @@ int main(int agrc, char* argv[]){
   vector<string> innocentList;
 
   while(b1){
-    bool guilty = false;
     b2 = bar2.getHead();
     while(b2){
       if(b1->id == b2->id){
-        guilty = true;
         b1->guilty = true;
         b2->guilty = true;
       }
       b2 = b2->next;
     }
-    if(guilty){
+    if(b1->guilty){
       guiltyList.push_back(b1->id);
     }
     else{
