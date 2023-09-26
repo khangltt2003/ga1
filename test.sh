@@ -13,7 +13,7 @@ if [ ! -f ${cmd} ]; then
 fi
 
 # clean
-for casenum in `seq 1 1 3`; do
+for casenum in `seq 1 1 4`; do
     if [ -f ${casenum}.out ]; then
         rm ${casenum}.out
     fi
@@ -27,7 +27,7 @@ done
 
 # For test case 1
 # input 1.txt and output 1.out
-for casenum in `seq 1 1 3`; do
+for casenum in `seq 1 1 4`; do
 	./${cmd} "input=input${casenum}.txt;output=output${casenum}.txt" 1>${casenum}.stdcout 2>${casenum}.stderr
 # compare 1.out with 1.ans, output the difference to 1.diff
 	diff -iBwu ans${casenum}.txt output${casenum}.txt > ${casenum}.diff

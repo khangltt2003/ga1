@@ -9,13 +9,16 @@ class Customer{
   public:
     string id;
     Customer* next;
+    bool guilty;
     Customer(){
       id = "";
       next = nullptr;
+      guilty = false;
     }
     Customer(string id ){
       this->id = id;
       next =  nullptr;
+      guilty = false;
     }
 };
 
@@ -41,6 +44,9 @@ class Bar{
       }
       Customer* curr = head;
       while(curr->next){
+        if(curr->id == newCustomer->id){
+          curr->guilty = true;
+        }
         curr = curr->next;
       }
       curr->next = newCustomer;
@@ -138,13 +144,14 @@ int main(int agrc, char* argv[]){
   vector<string> guiltyList;
   vector<string> innocentList;
 
-  //
   while(b1){
     bool guilty = false;
     b2 = bar2.getHead();
     while(b2){
       if(b1->id == b2->id){
         guilty = true;
+        b1->guilty = true;
+        b2->guilty = true;
       }
       b2 = b2->next;
     }
@@ -157,14 +164,43 @@ int main(int agrc, char* argv[]){
     b1 = b1->next;
   }
 
+  b1 = bar1.getHead();
+  while(b1){
+    if(find(guiltyList.begin(), guiltyList.end(), b1->id) == guiltyList.end()){
+      if(b1->guilty){
+        guiltyList.push_back(b1->id);
+      }
+      else if(count(innocentList.begin(), innocentList.end(), b1->id) == 0){
+        innocentList.push_back(b1->id);
+      }
+    }
+    b1 = b1->next;
+  }
+
   //put remaininng IDs of bar2 into innocentList
   b2 = bar2.getHead();
   while(b2){
     //if id is not in guitly list => innocent
     if(find(guiltyList.begin(), guiltyList.end(), b2->id) == guiltyList.end()){
-      innocentList.push_back(b2->id);
+      if(b2->guilty){
+        guiltyList.push_back(b2->id);
+      }
+      else if(count(innocentList.begin(), innocentList.end(), b2->id) == 0){
+        innocentList.push_back(b2->id);
+      }
     }
     b2 = b2->next;
+  }
+
+  //sort guityList
+  for(int i = 0; i < guiltyList.size(); i++){
+    for(int j = 0; j < guiltyList.size() - 1 - i; j++){
+      if(stoi(guiltyList[j]) > stoi(guiltyList[j+1])){
+        string temp = guiltyList[j];
+        guiltyList[j] = guiltyList[j+1];
+        guiltyList[j+1] = temp;
+      }
+    }
   }
 
   //sort innocentList 
