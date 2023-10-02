@@ -164,18 +164,18 @@ int main(int agrc, char* argv[]){
     b1 = b1->next;
   }
 
-  b1 = bar1.getHead();
-  while(b1){
-    if(find(guiltyList.begin(), guiltyList.end(), b1->id) == guiltyList.end()){
-      if(b1->guilty){
-        guiltyList.push_back(b1->id);
-      }
-      else if(count(innocentList.begin(), innocentList.end(), b1->id) == 0){
-        innocentList.push_back(b1->id);
-      }
-    }
-    b1 = b1->next;
-  }
+  // b1 = bar1.getHead();
+  // while(b1){
+  //   if(find(guiltyList.begin(), guiltyList.end(), b1->id) == guiltyList.end()){
+  //     if(b1->guilty){
+  //       guiltyList.push_back(b1->id);
+  //     }
+  //     else if(count(innocentList.begin(), innocentList.end(), b1->id) == 0){
+  //       innocentList.push_back(b1->id);
+  //     }
+  //   }
+  //   b1 = b1->next;
+  // }
 
   //put remaininng IDs of bar2 into innocentList
   b2 = bar2.getHead();
@@ -185,7 +185,7 @@ int main(int agrc, char* argv[]){
       if(b2->guilty){
         guiltyList.push_back(b2->id);
       }
-      else if(count(innocentList.begin(), innocentList.end(), b2->id) == 0){
+      else{
         innocentList.push_back(b2->id);
       }
     }
