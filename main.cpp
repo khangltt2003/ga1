@@ -85,6 +85,22 @@ string decodeInput(string str){
     return decodeInput(replacedStr);
 }
 
+void sort(vector<string>& v){
+  for(int i = 0; i < v.size(); i++){
+    bool isSorted = true;
+    for(int j = 0; j < v.size() - 1 - i; j++){
+      if(stoi(v[j]) > stoi(v[j+1])){
+        string temp = v[j];
+        v[j] = v[j+1];
+        v[j+1] = temp;
+        isSorted = false;
+      }
+    }
+    if(isSorted) return;
+  }
+}
+
+
 int main(int agrc, char* argv[]){
   ios_base::sync_with_stdio(false);
   cin.tie(NULL);
@@ -128,6 +144,7 @@ int main(int agrc, char* argv[]){
       if(b1->id == b2->id){
         b1->guilty = true;
         b2->guilty = true;
+        break;
       }
       b2 = b2->next;
     }
@@ -155,27 +172,9 @@ int main(int agrc, char* argv[]){
     b2 = b2->next;
   }
 
-  //sort guityList
-  for(int i = 0; i < guiltyList.size(); i++){
-    for(int j = 0; j < guiltyList.size() - 1 - i; j++){
-      if(stoi(guiltyList[j]) > stoi(guiltyList[j+1])){
-        string temp = guiltyList[j];
-        guiltyList[j] = guiltyList[j+1];
-        guiltyList[j+1] = temp;
-      }
-    }
-  }
-
-  //sort innocentList 
-  for(int i = 0; i < innocentList.size(); i++){
-    for(int j = 0; j < innocentList.size() - 1 - i; j++){
-      if(stoi(innocentList[j]) > stoi(innocentList[j+1])){
-        string temp = innocentList[j];
-        innocentList[j] = innocentList[j+1];
-        innocentList[j+1] = temp;
-      }
-    }
-  }
+  //sort
+  sort(guiltyList);
+  sort(innocentList);
 
   if(guiltyList.size() != 0){
     ofs << "Guilty:" << endl;
