@@ -59,36 +59,6 @@ class Bar{
       curr->next = newCustomer;
       size++;
     }
-
-    //insertion sort
-    void sortCustomer(){
-      if(head == nullptr || head->next == nullptr) return;
-
-      for(int i = 0; i < size; i++){
-        bool isSorted = true;
-        Customer* curr = head;
-
-        for(int j = 0; j < size - 1 - i;j++){
-          if(stoi(curr->id) > stoi(curr->next->id)){
-            string tempID = curr->id;
-            curr->id = curr->next->id;
-            curr->next->id = tempID;
-            isSorted = false;
-          }
-          curr  = curr->next;
-        }
-        if(isSorted) return;
-      }
-    }
-    void printCustomer(){
-      Customer* curr = head;
-      cout << name << ":" << endl;
-      while(curr){
-        cout << curr->id << endl;
-        curr = curr->next;
-      }
-    }
-
 };
 
 string reverseStr(string str){
@@ -144,8 +114,6 @@ int main(int agrc, char* argv[]){
       }
     }
   }
-  // bar1.sortCustomer();
-  // bar2.sortCustomer();
 
   Customer* b1 = bar1.getHead();
   Customer* b2 = bar2.getHead();
@@ -153,6 +121,7 @@ int main(int agrc, char* argv[]){
   vector<string> guiltyList;
   vector<string> innocentList;
   
+  //check IDs in both bar1 and bar2
   while(b1){
     b2 = bar2.getHead();
     while(b2){
@@ -170,19 +139,6 @@ int main(int agrc, char* argv[]){
     }
     b1 = b1->next;
   }
-
-  // b1 = bar1.getHead();
-  // while(b1){
-  //   if(find(guiltyList.begin(), guiltyList.end(), b1->id) == guiltyList.end()){
-  //     if(b1->guilty){
-  //       guiltyList.push_back(b1->id);
-  //     }
-  //     else if(count(innocentList.begin(), innocentList.end(), b1->id) == 0){
-  //       innocentList.push_back(b1->id);
-  //     }
-  //   }
-  //   b1 = b1->next;
-  // }
 
   //put remaininng IDs of bar2 into innocentList
   b2 = bar2.getHead();
