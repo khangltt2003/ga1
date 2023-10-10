@@ -81,7 +81,6 @@ string decodeInput(string str){
     int stopIndex = str.find(')');
     string reversedStr = reverseStr(str.substr(startIndex + 1, stopIndex - startIndex - 1));
     string replacedStr = str.replace(startIndex, stopIndex - startIndex + 1, reversedStr);
-    // cout << replacedStr << endl;
     return decodeInput(replacedStr);
 }
 
@@ -99,7 +98,6 @@ void sort(vector<string>& v){
     if(isSorted) return;
   }
 }
-
 
 int main(int agrc, char* argv[]){
   ios_base::sync_with_stdio(false);
@@ -151,7 +149,7 @@ int main(int agrc, char* argv[]){
     if(b1->guilty){
       guiltyList.push_back(b1->id);
     }
-    else{
+    else if(!b1->guilty){
       innocentList.push_back(b1->id);
     }
     b1 = b1->next;
@@ -160,7 +158,7 @@ int main(int agrc, char* argv[]){
   //put remaininng IDs of bar2 into innocentList
   b2 = bar2.getHead();
   while(b2){
-    //if id is not in guitly list => innocent
+    //if id is not in guitly list && not guilty => innocent
     if(find(guiltyList.begin(), guiltyList.end(), b2->id) == guiltyList.end()){
       if(b2->guilty){
         guiltyList.push_back(b2->id);
