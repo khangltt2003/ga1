@@ -43,6 +43,7 @@ class Bar{
         return;
       }
       Customer* curr = head;
+      //check if the customer is already in the bar
       while(curr){
         if(curr->id == newCustomer->id){
           curr->guilty = true;
@@ -50,6 +51,7 @@ class Bar{
         }
         curr = curr->next;
       }
+
       curr = head;
       while(curr->next){
         curr = curr->next;
@@ -104,7 +106,7 @@ string decodeInput(string str){
     int startIndex = 0;
     while(str.find('(', position) != string::npos){
         startIndex = str.find('(', position);
-        position++;
+        position = startIndex + 1;
     }
     int stopIndex = str.find(')');
     string reversedStr = reverseStr(str.substr(startIndex + 1, stopIndex - startIndex - 1));
@@ -114,6 +116,8 @@ string decodeInput(string str){
 }
 
 int main(int agrc, char* argv[]){
+  ios_base::sync_with_stdio(false);
+  cin.tie(NULL);
   ArgumentManager am(agrc, argv);
   ifstream ifs(am.get("input"));
   ofstream ofs(am.get("output"));
@@ -123,8 +127,11 @@ int main(int agrc, char* argv[]){
   string currentBar = "";
   string line;
   while(getline(ifs,line)){
+    line.erase(remove(line.begin(), line.end(), '\n'), line.end());
+    line.erase(remove(line.begin(), line.end(), '\r'), line.end());
+    line.erase(remove(line.begin(), line.end(), ' '), line.end());
     if(line == "") continue;
-    if(line == "Bar1" || line == "Bar2"){
+    else if(line == "Bar1" || line == "Bar2"){
       currentBar = line;
     }
     else{
@@ -137,15 +144,15 @@ int main(int agrc, char* argv[]){
       }
     }
   }
-  bar1.sortCustomer();
-  bar2.sortCustomer();
+  // bar1.sortCustomer();
+  // bar2.sortCustomer();
 
   Customer* b1 = bar1.getHead();
   Customer* b2 = bar2.getHead();
 
   vector<string> guiltyList;
   vector<string> innocentList;
-
+  
   while(b1){
     b2 = bar2.getHead();
     while(b2){
